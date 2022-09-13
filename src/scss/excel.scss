@@ -1,0 +1,118 @@
+.excel {
+	position: relative;
+	color: #888;
+	height: 100%;
+	max-width: 100%;
+	font-size: 0.8rem;
+	&__top {
+		background: #fff;
+		position: sticky;
+		top: 0;
+		z-index: 5;
+	}
+	&__header {
+		padding: 8px 4px 0;
+		display: flex;
+		justify-content: space-between;
+		.input {
+			margin: 0;
+			padding: 2px 7px;
+			color: #000;
+			border: 1px solid transparent;
+			border-radius: 2px;
+			height: 20px;
+			font-size: 18px;
+			line-height: 22px;
+			&:hover {
+				border: 1px solid $border-color;
+			}
+			&:focus {
+				border: 2px solid #1a73e8;
+			}
+		}
+		.button {
+			@include button(red);
+		}
+	}
+	&__toolbar {
+		border-top: 1px solid $border-color;
+		border-bottom: 1px solid $border-color;
+		padding: 7px 10px;
+		display: flex;
+		.button {
+			@include button();
+		}
+	}
+	&__formula {
+		height: 24px;
+		display: flex;
+		align-items: center;
+		border-bottom: 1px solid $border-color;
+		.info {
+			font-size: 18px;
+			text-align: center;
+			font-style: italic;
+			border-right: 1px solid $border-color;
+			min-width: $info-cell-width;
+		}
+		.input {
+			padding: 4px;
+			font-size: 12px;
+			outline: none;
+			width: 100%;
+			height: 100%;
+			color: #000;
+		}
+	}
+	&__table {
+		overflow-x: auto;
+		padding-bottom: 2px;
+		.row {
+			display: flex;
+			min-height: 20px;
+			height: $row-height;
+		}
+		.row-info {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-width: $info-cell-width;
+			height: 100%;
+			border: 1px solid $border-color;
+			background: $table-background;
+			border-top: none;
+		}
+		.row-data {
+			display: flex;
+		}
+		.column {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			background: $table-background;
+			min-width: 40px;
+			width: $cell-width;
+			border: 1px solid $border-color;
+			border-top: none;
+			border-left: none;
+			height: 100%;
+		}
+		.cell {
+			min-width: 40px;
+			padding: 5px;
+			width: $cell-width;
+			height: 100%;
+			border: 1px solid #e2e3e3;
+			border-top: none;
+			border-left: none;
+			color: #111;
+			white-space: nowrap;
+			outline: none;
+			&.selected {
+				border: none;
+				outline: 2px solid #3c74ff;
+				z-index: 2;
+			}
+		}
+	}
+}

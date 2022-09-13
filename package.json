@@ -43,5 +43,8 @@
 		"webpack-cli": "^4.10.0",
 		"webpack-dev-server": "^4.11.0"
 	},
-	"browserslist": "> 0.25%, not dead"
+	"browserslist": "> 0.25%, not dead",
+	"dependencies": {
+		"normalize.css": "^8.0.1"
+	}
 }
