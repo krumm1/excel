@@ -11,7 +11,8 @@
 		"linebreak-style": "off",
 		"object-curly-spacing": "off",
 		"indent": "off",
-		"no-tabs": "off"
+		"no-tabs": "off",
+		"operator-linebreak": "off"
 	},
 	"extends": ["eslint:recommended", "google"],
 	"parserOptions": {
