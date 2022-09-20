@@ -67,6 +67,9 @@
 	&__table {
 		overflow-x: auto;
 		padding-bottom: 2px;
+		&.resizing {
+			user-select: none;
+		}
 		.row {
 			display: flex;
 			min-height: 20px;
@@ -81,6 +84,39 @@
 			border: 1px solid $border-color;
 			background: $table-background;
 			border-top: none;
+			position: relative;
+		}
+		.row-resize,
+		.column-resize {
+			background: $primary-color;
+			position: absolute;
+			right: 0;
+			bottom: 0;
+			opacity: 0;
+			z-index: 2;
+			&.active {
+				opacity: 1;
+				z-index: 10;
+			}
+			&:hover {
+				opacity: 1;
+			}
+		}
+		.row-resize {
+			left: 0;
+			height: 4px;
+			transform: translateY(50%);
+			&:hover {
+				cursor: row-resize;
+			}
+		}
+		.column-resize {
+			top: 0;
+			width: 4px;
+			transform: translateX(50%);
+			&:hover {
+				cursor: col-resize;
+			}
 		}
 		.row-data {
 			display: flex;
@@ -96,6 +132,7 @@
 			border-top: none;
 			border-left: none;
 			height: 100%;
+			position: relative;
 		}
 		.cell {
 			min-width: 40px;
@@ -110,7 +147,7 @@
 			outline: none;
 			&.selected {
 				border: none;
-				outline: 2px solid #3c74ff;
+				outline: 2px solid $primary-color;
 				z-index: 2;
 			}
 		}
