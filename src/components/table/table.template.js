@@ -3,12 +3,16 @@ const CODES = {
 	Z: 90,
 };
 
-function createCell(index) {
-	return `<div class="cell" contenteditable data-index="${index}"></div>`;
+function createCell(col, row) {
+	return `<div class="cell" contenteditable 
+	data-col="${col}" 
+	data-id="${row}:${col}"
+	data-type="cell"
+	>${row}:${col}</div>`;
 }
 
-function createColumn(col, index) {
-	return `<div class="column" data-type="resizeble" data-index="${index}">
+function createColumn(col, colIndex) {
+	return `<div class="column" data-type="resizeble" data-col="${colIndex}">
 		${col}
 		<div class="column-resize" data-resize="col"></div>
 	</div>`;
@@ -25,7 +29,7 @@ function createRow(content, index = "") {
         </div>
     `;
 }
-createCell();
+
 function toChar(i) {
 	return String.fromCharCode(CODES.A + i);
 }
@@ -34,17 +38,17 @@ export function createTable(rowsCount = 100) {
 	const rows = [];
 	const columnsCount = CODES.Z - CODES.A + 1;
 	const columns = [];
-	const cells = [];
 
-	for (let i = 0; i < columnsCount; i++) {
-		columns.push(createColumn(toChar(i), i));
-		cells.push(createCell(i));
-	}
-
-	rows.push(createRow(columns.join("")));
-
-	for (let i = 0; i < rowsCount; i++) {
-		rows.push(createRow(cells.join(""), i + 1));
+	for (let row = 0; row < rowsCount; row++) {
+		const cells = [];
+		for (let col = 0; col < columnsCount; col++) {
+			columns.push(createColumn(toChar(col), col));
+			cells.push(createCell(col, row));
+		}
+		if (row === 0) {
+			rows.push(createRow(columns.join("")));
+		}
+		rows.push(createRow(cells.join(""), row + 1));
 	}
 
 	return rows.join("");

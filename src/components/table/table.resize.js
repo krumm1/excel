@@ -5,7 +5,7 @@ export function resize($root, event) {
 	const $resizer = $(event.target);
 	const $parent = $resizer.closest("[data-type]");
 	const coords = $parent.getCoords();
-	const cells = $root.findAll(`[data-index="${$parent.data.index}"]`);
+	const cells = $root.findAll(`[data-col="${$parent.data.col}"]`);
 	let value = 0;
 
 	$root.addClass("resizing");
