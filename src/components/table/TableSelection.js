@@ -11,6 +11,10 @@ export class TableSelection {
 		this.selection = [];
 	}
 
+	get selectedIds() {
+		return this.selection.map(($el) => $el.data.id);
+	}
+
 	select($el) {
 		this.clear();
 		this.selection.push($el);
@@ -22,5 +26,9 @@ export class TableSelection {
 		this.clear();
 		this.selection = $group;
 		$group.forEach(($el) => $el.addClass(TableSelection.className));
+	}
+
+	applyStyle(style) {
+		this.selection.forEach(($el) => $el.css(style));
 	}
 }

@@ -1,5 +1,6 @@
 import { $ } from "@core/Dom";
 import { Emitter } from "@core/Emitter";
+import { StoreSubscriber } from "@core/StoreSubscriber";
 
 export class Excel {
 	constructor(selector, options) {
@@ -7,6 +8,8 @@ export class Excel {
 		this.components = options.components || [];
 		this.topComponents = options.topComponents || [];
 		this.emitter = new Emitter();
+		this.store = options.store;
+		this.subscriber = new StoreSubscriber(this.store);
 	}
 
 	getRoot() {
@@ -14,6 +17,7 @@ export class Excel {
 		const $rootTop = $.create("div", "excel__top");
 		const componentOptions = {
 			emitter: this.emitter,
+			store: this.store,
 		};
 
 		$root.append($rootTop);
@@ -24,10 +28,6 @@ export class Excel {
 
 			const component = new Component($componentRoot, componentOptions);
 			$componentRoot.html(component.toHTML());
-
-			// debug
-			// window["c" + component.name] = component;
-			// debug
 
 			if (inHeader) {
 				$rootTop.append($componentRoot);
@@ -43,6 +43,13 @@ export class Excel {
 
 	render() {
 		this.$el.append(this.getRoot());
+
+		this.subscriber.subscribeComponents(this.components);
 		this.components.forEach((component) => component.init());
+	}
+
+	destroy() {
+		this.subscriber.unsubscribeFromStore();
+		this.components.forEach((component) => component.destroy());
 	}
 }

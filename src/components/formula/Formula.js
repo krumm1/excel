@@ -6,6 +6,7 @@ export class Formula extends ExcelComponent {
 		super($root, {
 			name: "Formula",
 			listeners: ["input", "keydown"],
+			subscribe: ["currentText"],
 			...options,
 		});
 	}
@@ -17,9 +18,7 @@ export class Formula extends ExcelComponent {
 
 		this.$formula = this.$root.find("[contenteditable]");
 
-		this.$on("Table:input", ($cell) => this.$formula.text($cell.text()));
-
-		this.$on("Table:select", ($cell) => this.$formula.text($cell.text()));
+		this.$on("Table:select", ($cell) => this.$formula.text($cell.data.value));
 	}
 
 	toHTML() {
@@ -27,6 +26,10 @@ export class Formula extends ExcelComponent {
             <div class="info">fx</div>
             <div class="input" contenteditable="true" spellcheck="false"></div>
         `;
+	}
+
+	storeChanged({ currentText }) {
+		this.$formula.text(currentText);
 	}
 
 	onInput(e) {
@@ -38,7 +41,7 @@ export class Formula extends ExcelComponent {
 		const { key } = e;
 		const keys = ["Enter", "Tab"];
 
-		if (keys.incluldes(key)) {
+		if (keys.includes(key)) {
 			e.preventDefault();
 			this.$emit("Formula:enter");
 		}
