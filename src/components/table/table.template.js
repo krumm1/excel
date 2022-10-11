@@ -8,16 +8,17 @@ const CODES = {
 };
 
 function getSize(id, state) {
+	if (!state) return;
 	return state[id] ? state[id] + "px" : "";
 }
 
 function createCell(col, row, state = {}) {
 	const width = getSize(col, state.colState);
 	const id = `${row}:${col}`;
-	const data = state.dataState[id] || "";
+	const data = state.dataState?.[id] || "";
 	const styles = toInlineStyles({
 		...defaultStyles,
-		...state.stylesState[id],
+		...state.stylesState?.[id],
 	});
 
 	return `<div class="cell" contenteditable 
@@ -64,7 +65,7 @@ function toChar(i) {
 	return String.fromCharCode(CODES.A + i);
 }
 
-export function createTable(rowsCount = 100, state) {
+export function createTable(rowsCount = 100, state = {}) {
 	const rows = [];
 	const columnsCount = CODES.Z - CODES.A + 1;
 	const columns = [];
